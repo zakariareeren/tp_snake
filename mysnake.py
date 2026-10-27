@@ -8,12 +8,22 @@ import pygame as pg
 def pair(x):
     return x%2==0
 SNAKE = [(10, 15),(11, 15),(12, 15)]
+DIRECTION = (1, 0)   # vers la droite
 
 def draw_snake(snake):
     for a in snake:
         x,y=a[0]*20 ,a[1]*20
         rect=pg.Rect(x,y,20,20)
         pg.draw.rect(screen,(255,0,0),rect) 
+
+def move_snake(snake,direction):
+    snake.pop(0)
+    a,b=direction[0],direction[1]
+    x,y=snake[len(snake)-1][0]+a, snake[len(snake)-1][1]+b
+    snake.append((x,y))
+
+
+
 
 def drawboard():
     blanc=(255, 255, 255)
@@ -25,14 +35,14 @@ def drawboard():
                pg.draw.rect(screen,blanc,rect)    
     draw_snake(SNAKE)
 
-    
+
 pg.init()
 screen = pg.display.set_mode((600, 600))
 clock = pg.time.Clock()
 flag=True 
 
 while flag==True:
-    clock.tick(1)
+    clock.tick(2)
 
     for event in pg.event.get():
         pass
@@ -42,7 +52,7 @@ while flag==True:
     pg.display.update()
     if event.type==pg.QUIT:
         flag=False
-
+    move_snake(SNAKE,DIRECTION)
 pg.quit()
 
 
@@ -50,7 +60,8 @@ pg.quit()
 
     
 # On ne peut fermer la fenetre avec la croix parce que : dans le programme, il n'y a aucune condition qui fasse passer le booleen à False, donc il ne s'arrête jamais
-# Pour arreter le programme : 
+
+# 3.3 : Le serpent continue sa route et ne revient plus
 
 
     
