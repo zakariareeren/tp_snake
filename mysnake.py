@@ -4,8 +4,16 @@
 
 from random import randint
 import pygame as pg
+
 def pair(x):
     return x%2==0
+SNAKE = [(10, 15),(11, 15),(12, 15)]
+
+def draw_snake(snake):
+    for a in snake:
+        x,y=a[0]*20 ,a[1]*20
+        rect=pg.Rect(x,y,20,20)
+        pg.draw.rect(screen,(255,0,0),rect) 
 
 def drawboard():
     blanc=(255, 255, 255)
@@ -15,7 +23,9 @@ def drawboard():
                x,y=20*i, 20*j #On retrouve les abscisses et ordonnées des points
                rect=pg.Rect(x,y,20,20)
                pg.draw.rect(screen,blanc,rect)    
+    draw_snake(SNAKE)
 
+    
 pg.init()
 screen = pg.display.set_mode((600, 600))
 clock = pg.time.Clock()
