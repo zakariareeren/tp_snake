@@ -7,6 +7,8 @@ import pygame as pg
 
 def pair(x):
     return x%2==0
+
+
 SNAKE = [(10, 15),(11, 15),(12, 15)]
 DIRECTION = (1, 0)   # vers la droite
 
@@ -18,10 +20,10 @@ def draw_snake(snake):
 
 def move_snake(snake,direction):
     snake.pop(0)
-    a,b=direction[0],direction[1]
-    x,y=snake[len(snake)-1][0]+a, snake[len(snake)-1][1]+b
-    snake.append((x,y))
-
+    a,b=direction
+    x,y=snake[-1]
+    snake.append((x+a,y+b))
+    return(snake,direction)
 
 
 
@@ -44,15 +46,28 @@ flag=True
 while flag==True:
     clock.tick(2)
 
+   
+    
     for event in pg.event.get():
-        pass
+        if event.type==pg.K_UP:
+          DIRECTION=(0,-1)
+        if event.type==pg.K_DOWN:
+          DIRECTION=(0,1)
+        if event.type==pg.K_RIGHT:
+          DIRECTION=(1,0)
+        if event.type==pg.K_LEFT:
+          DIRECTION=(-1,0)
 
+    
+    SNAKE,DIRECTION=move_snake(SNAKE,DIRECTION)
+    
     screen.fill((0,0,0))
     drawboard()
-    pg.display.update()
+    
+
     if event.type==pg.QUIT:
-        flag=False
-    move_snake(SNAKE,DIRECTION)
+            flag=False
+    pg.display.update()
 pg.quit()
 
 
@@ -63,5 +78,5 @@ pg.quit()
 
 # 3.3 : Le serpent continue sa route et ne revient plus
 
-
+# 4. : La direction vers le haut est (0,-1) car : On ne change pas l'abscisse (0) et on va monter d'une case le dernier elt de la liste donc son ordonnée doit etre dimunué de 1 d'où le -1
     
